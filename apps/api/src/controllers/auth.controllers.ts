@@ -5,12 +5,11 @@ import { createUser } from "../models/User"
 
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
   const { email, password } = req.body;
-  const newUser: PlatformUser = {
-    id: null,
-    email,
-    password
-  };
 
-  // please finish this function
-
+  try {
+    const newUser = await createUser({ email, password });
+    res.status(201).json(newUser);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to create user" });
+  }
 };
